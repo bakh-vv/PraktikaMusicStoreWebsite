@@ -10,17 +10,17 @@ using PraktikaMusicStoreWebsite.Models;
 
 namespace PraktikaMusicStoreWebsite.Controllers
 {
-    public class AlbumsController : Controller
+    public class AlbumController : Controller
     {
         private StoreContext db = new StoreContext();
 
-        // GET: /Albums/
+        // GET: /Album/
         public ActionResult Index()
         {
             return View(db.Albums.ToList());
         }
 
-        // GET: /Albums/Details/5
+        // GET: /Album/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,13 +35,13 @@ namespace PraktikaMusicStoreWebsite.Controllers
             return View(album);
         }
 
-        // GET: /Albums/Create
+        // GET: /Album/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Albums/Create
+        // POST: /Album/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -58,7 +58,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
             return View(album);
         }
 
-        // GET: /Albums/Edit/5
+        // GET: /Album/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
             return View(album);
         }
 
-        // POST: /Albums/Edit/5
+        // POST: /Album/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,7 +89,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
             return View(album);
         }
 
-        // GET: /Albums/Delete/5
+        // GET: /Album/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
             return View(album);
         }
 
-        // POST: /Albums/Delete/5
+        // POST: /Album/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
