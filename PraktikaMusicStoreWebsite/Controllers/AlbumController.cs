@@ -15,12 +15,14 @@ namespace PraktikaMusicStoreWebsite.Controllers
         private StoreContext db = new StoreContext();
 
         // GET: /Album/
+        //[Route("Album/All")]
         public ActionResult Index()
         {
             return View(db.Albums.ToList());
         }
 
         // GET: /Album/Details/5
+        [Authorize()]
         public ActionResult Details(int? id)
         {
             if (id == null)
