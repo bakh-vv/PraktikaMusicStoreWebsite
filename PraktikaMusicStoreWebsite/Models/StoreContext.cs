@@ -6,6 +6,7 @@ using System.Web;
 
 namespace PraktikaMusicStoreWebsite.Models
 {
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public class StoreContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
@@ -15,8 +16,9 @@ namespace PraktikaMusicStoreWebsite.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public StoreContext() : base("name=StoreContext")
+        public StoreContext() : base("name=StoreContextMySQL")
         {
+            Database.SetInitializer<StoreContext>(new DropCreateDatabaseIfModelChanges<StoreContext>());
         }
 
         public DbSet<Album> Albums { get; set; }
