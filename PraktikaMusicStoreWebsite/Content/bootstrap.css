@@ -7049,3 +7049,16 @@ a.list-group-item-danger.active:focus {
 .aboutInfo {
     margin = 70px;
 }
+
+.message-form-group textarea {
+    width: 400px;
+    height: 200px;
+    margin-bottom: 40px;
+    //margin-left: -10px;
+}
+
+.message-form-group {
+    margin-left: 0px;
+    margin-bottom: 50px;
+    margin-left: -10px;
+}

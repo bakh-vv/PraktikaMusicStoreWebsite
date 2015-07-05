@@ -169,6 +169,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -176,6 +177,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MyDbInitializer.cs" />
     <Compile Include="Models\StoreContext.cs" />
@@ -237,6 +239,8 @@
     <Content Include="Views\Artists\Details.cshtml" />
     <Content Include="Views\Artists\Edit.cshtml" />
     <Content Include="Views\Artists\Index.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Feedback\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
