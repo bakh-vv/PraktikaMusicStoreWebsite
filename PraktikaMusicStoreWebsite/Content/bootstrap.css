@@ -7062,3 +7062,9 @@ a.list-group-item-danger.active:focus {
     margin-bottom: 50px;
     margin-left: -10px;
 }
+
+.captcha {
+    margin-bottom: 20px;
+    margin-left: 5px;
+    //zoom:.93;
+}
