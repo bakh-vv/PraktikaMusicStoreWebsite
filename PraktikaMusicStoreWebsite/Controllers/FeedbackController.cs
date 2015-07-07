@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PraktikaMusicStoreWebsite.Models;
 using System.Data;
 using System.Net.Mail;
+using System.Net;
 
 namespace PraktikaMusicStoreWebsite.Controllers
 {
@@ -38,27 +39,24 @@ namespace PraktikaMusicStoreWebsite.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include="Name,Email,Phone, Message")] Feedback feedback)
         {
-            try
-            {
+            //try
+            //{
                 // TODO: Add insert logic here
-                MailMessage mail = new MailMessage("wellsaid@mail.ru", feedback.Email);
-                SmtpClient client = new SmtpClient();
-                client.Port = 25;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Host = "smtp.google.com";
-                mail.Subject = "feedback from " + feedback.Name;
-                string message = feedback.Message + "/n/n" + "Name: " + feedback.Name + "/n" + "Phone: " + feedback.Phone.ToString() + "/n";
-                mail.Body = message;
-                client.Send(mail);
+                //string message = feedback.Message + "/n/n" + "Name: " + feedback.Name + "/n" + "Phone: " + feedback.Phone.ToString() + "/n" + "Email: " + feedback.Email;
+
+            var msg = new MailMessage("oleg_guru@mail.ru", "wellsaid@mail.ru", "hello", "there");
+            var smtpClient = new SmtpClient("smtp.mail.ru", 25);
+            smtpClient.Credentials = new NetworkCredential("oleg_guru@mail.ru", "jvBG7jyAhk");
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(msg);
                  
 
                 return RedirectToAction("Confirmation");
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch
+            //{
+            //    return View("Error");
+            //}
         }
 
         // GET: Feedback/Edit/5
