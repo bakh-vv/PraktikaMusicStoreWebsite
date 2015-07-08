@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using PraktikaMusicStoreWebsite.Models;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http;
 
 namespace PraktikaMusicStoreWebsite.Controllers
 {
@@ -74,77 +75,70 @@ namespace PraktikaMusicStoreWebsite.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
+        //[RecaptchaControlMvc.CaptchaValidatorAttribute]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (await RecaptchaIsValid(Request.Form["g-recaptcha-response"]))
+                //if(true)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    var user = new ApplicationUser() { UserName = model.UserName };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
-                else
-                {
-                    AddErrors(result);
-                }
+                ModelState.AddModelError(
+                    "invalid-recaptcha-response",
+                    "Please answer the recaptcha challenge.");
             }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return View();
+        
         }
 
-        //[HttpPost]
-        //public ActionResult ValidateCaptcha()
-        //{
-        //    var response = Request["g-recaptcha-response"];
-        //    //secret that was generated in key value pair
-        //    const string secret = "6LfkcwkTAAAAALIVIDj2gOaEnsawbU91vkUKgMON";
-
-        //    var client = new WebClient();
-        //    var reply =
-        //        client.DownloadString(
-        //            string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
-
-        //    var captchaResponse = JsonConvert.DeserializeObject<CaptchaResponse>(reply);
-
-        //    //when response is false check for the error message
-        //    if (!captchaResponse.Success)
-        //    {
-        //        if (captchaResponse.ErrorCodes.Count <= 0) return View();
-
-        //        var error = captchaResponse.ErrorCodes[0].ToLower();
-        //        switch (error)
-        //        {
-        //            case ("missing-input-secret"):
-        //                ViewBag.Message = "The secret parameter is missing.";
-        //                break;
-        //            case ("invalid-input-secret"):
-        //                ViewBag.Message = "The secret parameter is invalid or malformed.";
-        //                break;
-
-        //            case ("missing-input-response"):
-        //                ViewBag.Message = "The response parameter is missing.";
-        //                break;
-        //            case ("invalid-input-response"):
-        //                ViewBag.Message = "The response parameter is invalid or malformed.";
-        //                break;
-
-        //            default:
-        //                ViewBag.Message = "Error occured. Please try again";
-        //                break;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Message = "Valid";
-        //    }
-
-        //    return View();
-        //}
+        private async Task<bool> RecaptchaIsValid(string captchaResponse)
+        {
+            var requestUrl =
+                String.Format(
+                    "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}&remoteip={2}",
+                    "6LfkcwkTAAAAALIVIDj2gOaEnsawbU91vkUKgMON",
+                    captchaResponse,
+                    Request.UserHostAddress);
+            string result;
+            using (var client = new HttpClient())
+            {
+                result = await client.GetStringAsync(requestUrl);
+            }
+            if (!String.IsNullOrWhiteSpace(result))
+            {
+                var obj = JsonConvert.DeserializeObject<RecaptchaResponse>(result);
+                if (obj.Success)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private class RecaptchaResponse
+        {
+            public bool Success { get; set; }
+            [JsonProperty("error-codes")]
+            public ICollection<string> ErrorCodes { get; set; }
+            public RecaptchaResponse()
+            {
+                ErrorCodes = new HashSet<string>();
+            }
+        }
+      
 
         //
         // POST: /Account/Disassociate
