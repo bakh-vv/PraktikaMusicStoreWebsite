@@ -48,7 +48,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
+                var user = UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -86,7 +86,7 @@ namespace PraktikaMusicStoreWebsite.Controllers
                 //if(true)
                 {
                     var user = new ApplicationUser() { UserName = model.UserName };
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    var result = UserManager.Create(user, model.Password);
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);

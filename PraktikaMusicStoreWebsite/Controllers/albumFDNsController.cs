@@ -7,114 +7,111 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PraktikaMusicStoreWebsite.Models;
-using MySql.Data.MySqlClient;
 
 namespace PraktikaMusicStoreWebsite.Controllers
 {
-    public class AlbumController : Controller
+    public class albumFDNsController : Controller
     {
-        private StoreContext db = new StoreContext();
+        private StoreContextFDN db = new StoreContextFDN();
 
-        // GET: /Album/
-        //[Route("Album/All")]
-        [Authorize()]
+        // GET: albumFDNs
+        //[Authorize()]
         public ActionResult Index()
         {
-            return View(db.Albums.ToList());
+            return View(db.albumFDNs.ToList());
         }
 
-        // GET: /Album/Details/5
-        [Authorize()]
+        // GET: albumFDNs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Albums.Find(id);
-            if (album == null)
+            albumFDN albumFDN = db.albumFDNs.Find(id);
+            if (albumFDN == null)
             {
                 return HttpNotFound();
             }
-            return View(album);
+            return View(albumFDN);
         }
 
-        // GET: /Album/Create
+        // GET: albumFDNs/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Album/Create
+        // POST: albumFDNs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="AlbumID,Name,Duration,Price")] Album album)
+        public ActionResult Create([Bind(Include = "albumFDNID,Name,Year,Duration,artistID,Availability,typeID,Price")] albumFDN albumFDN)
         {
             if (ModelState.IsValid)
             {
-                db.Albums.Add(album);
+                db.albumFDNs.Add(albumFDN);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(album);
+            return View(albumFDN);
         }
 
-        // GET: /Album/Edit/5
+        // GET: albumFDNs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Albums.Find(id);
-            if (album == null)
+            albumFDN albumFDN = db.albumFDNs.Find(id);
+            if (albumFDN == null)
             {
                 return HttpNotFound();
             }
-            return View(album);
+            return View(albumFDN);
         }
 
-        // POST: /Album/Edit/5
+        // POST: albumFDNs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="AlbumID,Name,Duration,Price")] Album album)
+        public ActionResult Edit([Bind(Include = "albumFDNID,Name,Year,Duration,artistID,Availability,typeID,Price")] albumFDN albumFDN)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(album).State = EntityState.Modified;
+                db.Entry(albumFDN).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(album);
+            return View(albumFDN);
         }
 
-        // GET: /Album/Delete/5
+        // GET: albumFDNs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Albums.Find(id);
-            if (album == null)
+            albumFDN albumFDN = db.albumFDNs.Find(id);
+            if (albumFDN == null)
             {
                 return HttpNotFound();
             }
-            return View(album);
+            return View(albumFDN);
         }
 
-        // POST: /Album/Delete/5
+        // POST: albumFDNs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Album album = db.Albums.Find(id);
-            db.Albums.Remove(album);
+            albumFDN albumFDN = db.albumFDNs.Find(id);
+            db.albumFDNs.Remove(albumFDN);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

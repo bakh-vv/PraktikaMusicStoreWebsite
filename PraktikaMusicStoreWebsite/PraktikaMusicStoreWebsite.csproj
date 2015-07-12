@@ -55,6 +55,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -172,6 +174,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\albumFDNsController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -189,11 +192,31 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\albumfd.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>albumfd.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\albumfd.cs">
+      <DependentUpon>albumfd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\albumfd.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>albumfd.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\albumfd1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>albumfd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\albumFDN.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MyDbInitializer.cs" />
     <Compile Include="Models\StoreContext.cs" />
+    <Compile Include="Models\StoreContextFDN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -205,6 +228,23 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\albumfd.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>albumfd.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\albumfd.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>albumfd.edmx</DependentUpon>
+      <LastGenOutput>albumfd.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\albumfd.edmx.diagram">
+      <DependentUpon>albumfd.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\albumfd.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>albumfd.edmx</DependentUpon>
+      <LastGenOutput>albumfd1.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -254,6 +294,11 @@
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Feedback\Create.cshtml" />
     <Content Include="Views\Feedback\Confirmation.cshtml" />
+    <Content Include="Views\albumFDNs\Create.cshtml" />
+    <Content Include="Views\albumFDNs\Delete.cshtml" />
+    <Content Include="Views\albumFDNs\Details.cshtml" />
+    <Content Include="Views\albumFDNs\Edit.cshtml" />
+    <Content Include="Views\albumFDNs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,6 +318,9 @@
     <EmbeddedResource Include="Migrations\201507072309232_AccountDatabaseIsntWorking.resx">
       <DependentUpon>201507072309232_AccountDatabaseIsntWorking.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

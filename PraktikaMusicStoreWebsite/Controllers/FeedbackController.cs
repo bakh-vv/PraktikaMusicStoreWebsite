@@ -42,13 +42,29 @@ namespace PraktikaMusicStoreWebsite.Controllers
             //try
             //{
                 // TODO: Add insert logic here
-                //string message = feedback.Message + "/n/n" + "Name: " + feedback.Name + "/n" + "Phone: " + feedback.Phone.ToString() + "/n" + "Email: " + feedback.Email;
+            string message = feedback.Message + System.Environment.NewLine + "Name: " + feedback.Name + System.Environment.NewLine + "Phone: " + feedback.Phone.ToString() + System.Environment.NewLine + "Email: " + feedback.Email;
 
-            var msg = new MailMessage("oleg_guru@mail.ru", "wellsaid@mail.ru", "hello", "there");
-            var smtpClient = new SmtpClient("smtp.mail.ru", 25);
-            smtpClient.Credentials = new NetworkCredential("oleg_guru@mail.ru", "jvBG7jyAhk");
-            smtpClient.EnableSsl = true;
-            smtpClient.Send(msg);
+            MailMessage mailMessage = new MailMessage();
+            MailAddress fromAddress = new MailAddress("stevejobs@gmail.com");
+            mailMessage.From = fromAddress;
+            mailMessage.To.Add("billgates@yahoo.com");
+            mailMessage.Body = message;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Subject = " Testing Email";
+            //var smtp = new SmtpClient
+            //{
+            //    Host = "smtp.gmail.com",
+            //    Port = 587,
+            //    EnableSsl = true,
+            //    DeliveryMethod = SmtpDeliveryMethod.Network,
+            //    UseDefaultCredentials = false,
+            //    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            //};
+
+
+            SmtpClient smtpClient = new SmtpClient();
+            smtpClient.Host = "localhost";
+            smtpClient.Send(mailMessage);
                  
 
                 return RedirectToAction("Confirmation");
